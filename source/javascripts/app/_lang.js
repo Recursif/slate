@@ -33,9 +33,17 @@ under the License.
     for (var i=0; i < languages.length; i++) {
       $(".highlight.tab-" + languages[i]).hide();
       $(".lang-specific." + languages[i]).hide();
-    }
+ 
+      $('.highlight.tab-' + languages[i]).each(function(i, obj) {
+           if ($(this).prev().hasClass('center-column')) {
+                $(this).show();
+           }
+      });
+ }
     $(".highlight.tab-" + language).show();
     $(".lang-specific." + language).show();
+
+  
 
     window.recacheHeights();
 

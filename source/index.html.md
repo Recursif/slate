@@ -1,15 +1,11 @@
 ---
 title: API Reference
 
-language_tabs: # must be one of https://git.io/vQNgJ
+language_tabs: 
   - shell
-  - ruby
-  - python
   - javascript
 
 toc_footers:
-  - <a href='#'>Sign Up for a Developer Key</a>
-  - <a href='https://github.com/slatedocs/slate'>Documentation Powered by Slate</a>
 
 includes:
   - errors
@@ -19,223 +15,256 @@ search: true
 code_clipboard: true
 ---
 
-# Introduction
+# Get Started
 
-Welcome to the Kittn API! You can use our API to access Kittn API endpoints, which can get information on various cats, kittens, and breeds in our database.
+Welcome to the Linkcy's API!
 
-We have language bindings in Shell, Ruby, Python, and JavaScript! You can view code examples in the dark area to the right, and you can switch the programming language of the examples with the tabs in the top right.
+Before starting, make sure that you have created your CLIENT_ID and CLIENT_SECRET as they will be used across all the documentation. You can generate them in the configuration page in the dashboard.
 
-This example API documentation page was created with [Slate](https://github.com/slatedocs/slate). Feel free to edit it and use it as a base for your own API's documentation.
+By the end of this section, you will be able to register a new customer and issue him bank account and cards using Linkcy services.
 
-# Authentication
 
-> To authorize, use this code:
-
-```ruby
-require 'kittn'
-
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-```
-
-```python
-import kittn
-
-api = kittn.authorize('meowmeowmeow')
-```
+## Register a new customer
 
 ```shell
-# With shell, you can just pass the correct header with each request
-curl "api_endpoint_here" \
-  -H "Authorization: meowmeowmeow"
+curl -X POST 'https://api.linkcy.io/entities/' \
+  -u CLIENT_ID:CLIENT_SECRET | jq
 ```
 
 ```javascript
-const kittn = require('kittn');
-
-let api = kittn.authorize('meowmeowmeow');
+const axios = require("axios");
+const config = {
+  auth: { username: "CLIENT_ID", password: "CLIENT_SECRET" },
+  headers: {
+    Accept: "application/vnd.api+json",
+    "Content-Type": "application/vnd.api+json",
+  },
+};
+axios.post("https://api.linkcy.io/entities/", null, config)
 ```
 
-> Make sure to replace `meowmeowmeow` with your API key.
-
-Kittn uses API keys to allow access to the API. You can register a new Kittn API key at our [developer portal](http://example.com/developers).
-
-Kittn expects for the API key to be included in all API requests to the server in a header that looks like the following:
-
-`Authorization: meowmeowmeow`
+Before issuing bank account and cards to your customers, you'll need to register your customers into our system.
 
 <aside class="notice">
-You must replace <code>meowmeowmeow</code> with your personal API key.
+  Make sure to replace `CLIENT_ID` & `CLIENT_SECRET` with your API key.
 </aside>
 
-# Kittens
 
-## Get All Kittens
-
-```ruby
-require 'kittn'
-
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-api.kittens.get
-```
-
-```python
-import kittn
-
-api = kittn.authorize('meowmeowmeow')
-api.kittens.get()
-```
+## Issue a Bank account to a customer
 
 ```shell
-curl "http://example.com/api/kittens" \
-  -H "Authorization: meowmeowmeow"
+curl -X POST 'https://api.linkcy.io/bank/accounts/' \
+  -u CLIENT_ID:CLIENT_SECRET | jq
 ```
 
 ```javascript
-const kittn = require('kittn');
-
-let api = kittn.authorize('meowmeowmeow');
-let kittens = api.kittens.get();
-```
-
-> The above command returns JSON structured like this:
-
-```json
-[
-  {
-    "id": 1,
-    "name": "Fluffums",
-    "breed": "calico",
-    "fluffiness": 6,
-    "cuteness": 7
+const axios = require("axios");
+const config = {
+  auth: { username: "CLIENT_ID", password: "CLIENT_SECRET" },
+  headers: {
+    Accept: "application/vnd.api+json",
+    "Content-Type": "application/vnd.api+json",
   },
-  {
-    "id": 2,
-    "name": "Max",
-    "breed": "unknown",
-    "fluffiness": 5,
-    "cuteness": 10
-  }
-]
+};
+axios.post("https://api.linkcy.io/bank/accounts/", null, config)
 ```
 
-This endpoint retrieves all kittens.
-
-### HTTP Request
-
-`GET http://example.com/api/kittens`
-
-### Query Parameters
-
-Parameter | Default | Description
---------- | ------- | -----------
-include_cats | false | If set to true, the result will also include cats.
-available | true | If set to false, the result will include kittens that have already been adopted.
+This endpoint allow you to bank account to your customer.
 
 <aside class="success">
-Remember — a happy kitten is an authenticated kitten!
+  Your customer will be able to fund their account using the IBAN and BIC prodived in the response!
 </aside>
 
-## Get a Specific Kitten
-
-```ruby
-require 'kittn'
-
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-api.kittens.get(2)
-```
-
-```python
-import kittn
-
-api = kittn.authorize('meowmeowmeow')
-api.kittens.get(2)
-```
+## Issue a Card to a customer
 
 ```shell
-curl "http://example.com/api/kittens/2" \
-  -H "Authorization: meowmeowmeow"
+curl -X POST 'https://api.linkcy.io/cards/' \
+  -u CLIENT_ID:CLIENT_SECRET | jq
 ```
+
 
 ```javascript
-const kittn = require('kittn');
-
-let api = kittn.authorize('meowmeowmeow');
-let max = api.kittens.get(2);
+const axios = require("axios");
+const config = {
+  auth: { username: "CLIENT_ID", password: "CLIENT_SECRET" },
+  headers: {
+    Accept: "application/vnd.api+json",
+    "Content-Type": "application/vnd.api+json",
+  },
+};
+axios.post("https://api.linkcy.io/cards/", null, config)
 ```
 
-> The above command returns JSON structured like this:
+This endpoint allow you to issue a card to your customer.
 
-```json
-{
-  "id": 2,
-  "name": "Max",
-  "breed": "unknown",
-  "fluffiness": 5,
-  "cuteness": 10
-}
-```
+<aside class="success">
+  Your customer will receive his new card within 4 to 14 days!
+</aside>
 
-This endpoint retrieves a specific kitten.
 
-<aside class="warning">Inside HTML code blocks like this one, you can't use Markdown, so use <code>&lt;code&gt;</code> blocks to denote code.</aside>
+# Entities
 
-### HTTP Request
-
-`GET http://example.com/kittens/<ID>`
-
-### URL Parameters
-
-Parameter | Description
---------- | -----------
-ID | The ID of the kitten to retrieve
-
-## Delete a Specific Kitten
-
-```ruby
-require 'kittn'
-
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-api.kittens.delete(2)
-```
-
-```python
-import kittn
-
-api = kittn.authorize('meowmeowmeow')
-api.kittens.delete(2)
-```
+## Get a Customer
 
 ```shell
-curl "http://example.com/api/kittens/2" \
-  -X DELETE \
-  -H "Authorization: meowmeowmeow"
+curl -X POST 'https://api.linkcy.io/entities/:entityId' \
+  -u CLIENT_ID:CLIENT_SECRET | jq
 ```
+
 
 ```javascript
-const kittn = require('kittn');
-
-let api = kittn.authorize('meowmeowmeow');
-let max = api.kittens.delete(2);
+const axios = require("axios");
+const config = {
+  auth: { username: "CLIENT_ID", password: "CLIENT_SECRET" },
+  headers: {
+    Accept: "application/vnd.api+json",
+    "Content-Type": "application/vnd.api+json",
+  },
+};
+axios.post("https://api.linkcy.io/entities/:entityId", null, config)
 ```
 
-> The above command returns JSON structured like this:
+This endpoint retrieves a customer by it's id.
 
-```json
-{
-  "id": 2,
-  "deleted" : ":("
-}
+## Get all your Customers
+
+```shell
+curl -X GET 'https://api.linkcy.io/entities/' \
+  -u CLIENT_ID:CLIENT_SECRET | jq
 ```
 
-This endpoint deletes a specific kitten.
 
-### HTTP Request
+```javascript
+const axios = require("axios");
+const config = {
+  auth: { username: "CLIENT_ID", password: "CLIENT_SECRET" },
+  headers: {
+    Accept: "application/vnd.api+json",
+    "Content-Type": "application/vnd.api+json",
+  },
+};
+axios.get("https://api.linkcy.io/entities/", null, config)
+```
 
-`DELETE http://example.com/kittens/<ID>`
+This endpoint retrieves all your customers registred on Linkcy Services.
 
-### URL Parameters
 
-Parameter | Description
---------- | -----------
-ID | The ID of the kitten to delete
+# Bank Accounts
 
+## Get all transactions of one customer's bank account 
+
+```shell
+curl -X POST 'https://api.linkcy.io/bank/accounts/:entityId' \
+  -u CLIENT_ID:CLIENT_SECRET | jq
+```
+
+
+```javascript
+const axios = require("axios");
+const config = {
+  auth: { username: "CLIENT_ID", password: "CLIENT_SECRET" },
+  headers: {
+    Accept: "application/vnd.api+json",
+    "Content-Type": "application/vnd.api+json",
+  },
+};
+axios.post("https://api.linkcy.io/bank/accounts/:entityId", null, config)
+```
+
+This endpoint retrieves all transactions from a customer's bank account.
+
+
+# Cards
+
+## Get your customer's card details
+
+```shell
+curl -X POST 'https://api.linkcy.io/cards/details/:entityId' \
+  -u CLIENT_ID:CLIENT_SECRET | jq
+```
+
+
+```javascript
+const axios = require("axios");
+const config = {
+  auth: { username: "CLIENT_ID", password: "CLIENT_SECRET" },
+  headers: {
+    Accept: "application/vnd.api+json",
+    "Content-Type": "application/vnd.api+json",
+  },
+};
+axios.post("https://api.linkcy.iocards/details/:entityId", null, config)
+
+```
+
+This endpoint retrieves your customer's card details.
+
+## Get the PIN of your customer's card
+
+```shell
+curl -X GET 'https://api.linkcy.io/cards/pin/:entityId' \
+  -u CLIENT_ID:CLIENT_SECRET | jq
+```
+
+
+```javascript
+const axios = require("axios");
+const config = {
+  auth: { username: "CLIENT_ID", password: "CLIENT_SECRET" },
+  headers: {
+    Accept: "application/vnd.api+json",
+    "Content-Type": "application/vnd.api+json",
+  },
+};
+axios.get("https://api.linkcy.io/cards/pin/:entityId", null, config)
+
+```
+
+This endpoint retrieves the pin of your customer's card.
+
+## Reset the PIN of your customer's card
+
+```shell
+curl -X POST 'https://api.linkcy.io/cards/pin/:entityId' \
+  -u CLIENT_ID:CLIENT_SECRET | jq
+```
+
+
+```javascript
+const axios = require("axios");
+const config = {
+  auth: { username: "CLIENT_ID", password: "CLIENT_SECRET" },
+  headers: {
+    Accept: "application/vnd.api+json",
+    "Content-Type": "application/vnd.api+json",
+  },
+};
+axios.post("https://api.linkcy.io/cards/pin/:entityId", null, config)
+
+```
+
+This endpoint reset your customer's card pin code.
+
+
+## Suspend your customer's card
+
+```shell
+curl -X POST 'https://api.linkcy.io/cards/suspend' \
+  -u CLIENT_ID:CLIENT_SECRET | jq
+```
+
+
+```javascript
+const axios = require("axios");
+const config = {
+  auth: { username: "CLIENT_ID", password: "CLIENT_SECRET" },
+  headers: {
+    Accept: "application/vnd.api+json",
+    "Content-Type": "application/vnd.api+json",
+  },
+};
+axios.post("https://api.linkcy.io/cards/suspend", null, config)
+
+```
+
+This endpoint allows you to enable or disable your customer's card.

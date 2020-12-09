@@ -314,6 +314,9 @@ html, body {
 ////////////////////////////////////////////////////////////////////////////////
 // This is all the stuff with the light background in the left half of the page
 
+
+
+
 .content {
   // fixes webkit rendering bug for some: see #538
   -webkit-transform: translateZ(0);
@@ -326,6 +329,8 @@ html, body {
     display: block;
     clear: both;
   }
+
+
 
   &>h1, &>h2, &>h3, &>h4, &>h5, &>h6, &>p, &>table, &>ul, &>ol, &>aside, &>dl {
     margin-right: $examples-width;
@@ -630,4 +635,15 @@ html, body {
 
 .copy-clipboard:hover {
   opacity: 0.8;
+}
+
+
+.content {
+  .center-column + pre {    
+    position: static;
+    float: none;
+    clear: none;
+    margin: 0 28px;
+    left: 0;
+  }
 }

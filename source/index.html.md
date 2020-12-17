@@ -8,7 +8,7 @@ language_tabs:
 toc_footers:
 
 includes:
-  - errors
+  - references
 
 search: true
 
@@ -40,8 +40,29 @@ const config = {
     "Content-Type": "application/vnd.api+json",
   },
 };
-axios.post("https://api.linkcy.io/entities/", null, config)
+
+const entity = {
+  firstName: "firstName",
+  lastName: "lastName",
+  mail: "mail",
+  phone: "phone"
+}
+
+axios.post("https://api.linkcy.io/entities/", entity, config)
+
+/* return */
+
+return {
+  entityId: "4dd0a464-131e-4571-8bae-c1fc865071b1"
+  firstName: "firstName",
+  lastName: "lastName",
+  mail: "mail",
+  phone: "phone"
+  ...
+}
+
 ```
+
 
 Before issuing bank account and cards to your customers, you'll need to register your customers into our system.
 
@@ -66,7 +87,22 @@ const config = {
     "Content-Type": "application/vnd.api+json",
   },
 };
-axios.post("https://api.linkcy.io/bank/accounts/", null, config)
+
+const entityId = "4dd0a464-131e-4571-8bae-c1fc865071b1"
+
+axios.post("https://api.linkcy.io/bank/accounts/", entityId, config)
+
+/* return */
+
+return {
+  accountId: "aae6accf-8338-4174-908a-0d5642b9db6c"
+  entityId: "4dd0a464-131e-4571-8bae-c1fc865071b1",
+  iban: "GB84 TEST 1191 1608 1377 51",
+  bic: "TESTGB21",
+  ...
+}
+
+
 ```
 
 This endpoint allow you to bank account to your customer.
@@ -92,7 +128,17 @@ const config = {
     "Content-Type": "application/vnd.api+json",
   },
 };
-axios.post("https://api.linkcy.io/cards/", null, config)
+
+const accountId = "aae6accf-8338-4174-908a-0d5642b9db6c"
+
+axios.post("https://api.linkcy.io/cards/", accountId, config)
+
+/* return */
+
+return {
+  cardId: "8ace41a9-3b8f-4ae4-88f4-69a818ba238e"
+}
+
 ```
 
 This endpoint allow you to issue a card to your customer.
@@ -154,7 +200,7 @@ This endpoint retrieves all your customers registred on Linkcy Services.
 ## Get all transactions of one customer's bank account 
 
 ```shell
-curl -X POST 'https://api.linkcy.io/bank/accounts/:entityId' \
+curl -X POST 'https://api.linkcy.io/ledgers/:entityId' \
   -u CLIENT_ID:CLIENT_SECRET | jq
 ```
 
@@ -168,7 +214,7 @@ const config = {
     "Content-Type": "application/vnd.api+json",
   },
 };
-axios.post("https://api.linkcy.io/bank/accounts/:entityId", null, config)
+axios.post("https://api.linkcy.io/ledgers/:entityId", null, config)
 ```
 
 This endpoint retrieves all transactions from a customer's bank account.
@@ -268,3 +314,7 @@ axios.post("https://api.linkcy.io/cards/suspend", null, config)
 ```
 
 This endpoint allows you to enable or disable your customer's card.
+
+
+
+
